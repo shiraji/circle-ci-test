@@ -44,8 +44,7 @@ jobs:
 
       - run:
           name: Release
-          command:
-            - echo ${CIRCLE_TAG#beta-}
+          command: echo ${CIRCLE_TAG#beta-}
 
 workflows:
   version: 2
