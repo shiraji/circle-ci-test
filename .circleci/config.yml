@@ -64,9 +64,3 @@ workflows:
               filters:
                 tags:
                   only: /^beta-.*/
-      - release:
-          requires:
-            build_and_test:
-              filters:
-                tags:
-                  only: /^release-.*/
