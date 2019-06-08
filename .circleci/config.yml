@@ -21,7 +21,7 @@ jobs:
             - ~/.gradle/wrapper
           key: v1-app-build-dependencies-{{ checksum "settings.gradle.kts" }}-{{ checksum "build.gradle.kts" }}-{{ checksum "gradle.properties" }}
 
-  beta-release:
+  beta:
     docker:
       - image: circleci/openjdk:11-jdk
 
@@ -58,7 +58,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - beta-release:
+      - beta:
           requires:
             build_and_test:
               filters:
