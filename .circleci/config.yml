@@ -44,7 +44,9 @@ jobs:
 
       - run:
           name: Release
-          command: echo ${CIRCLE_TAG#beta-}
+          command: |
+            echo 'export VERSION=${CIRCLE_TAG#beta-}' >> $BASH_ENV
+            ./gradlew appVersion
 
 workflows:
   version: 2

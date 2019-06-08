@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.shiraji"
-version = "1.0.0"
+version = System.getenv("VERSION") ?: "0.0.1"
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform()
@@ -34,6 +34,12 @@ tasks.register("resolveDependencies") {
                 }
             }
         }
+    }
+}
+
+tasks.register("appVersion") {
+    doLast {
+        println(project.version)
     }
 }
 
