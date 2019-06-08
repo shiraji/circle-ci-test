@@ -44,10 +44,7 @@ jobs:
 
       - run:
           name: Release
-          environment:
-            VERSION: ${CIRCLE_TAG#beta-}
           run:
-            - echo $VERSION
             - echo ${CIRCLE_TAG#beta-}
 
 workflows:
