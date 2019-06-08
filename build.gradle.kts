@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.shiraji"
-version = System.getenv("VERSION") ?: "0.0.1"
+version = System.getProperty("VERSION") ?: "0.0.1"
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform()
