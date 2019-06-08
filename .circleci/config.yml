@@ -57,6 +57,8 @@ workflows:
       - beta:
           requires:
             - build_and_test
+          branches:
+            ignore: /.*/
           filters:
             tags:
               only: /^beta-.*/
