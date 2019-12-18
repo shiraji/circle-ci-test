@@ -29,6 +29,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     
     - name: Release
-      run: ./gradlew appVersion -DVERSION=${on.push.tags#beta-}
+      run: ./gradlew appVersion -DVERSION=${$GITHUB_REF#beta-}
