@@ -34,4 +34,4 @@ jobs:
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     
     - name: Release
-      run: ./gradlew appVersion -DVERSION=${$VERSION#beta-}
+      run: ./gradlew appVersion -DVERSION=${VERSION#beta-}
