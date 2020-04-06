@@ -23,7 +23,7 @@ jobs:
   beta-release:
     needs: build
     runs-on: ubuntu-latest
-    if: startswith(github.ref, 'tags/beta-')
+    if: startswith(github.ref, 'refs/tags/beta-')
     steps:
     - name: get the version
       id: get_version
@@ -33,7 +33,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'tags/release-')
+    if: startsWith(github.ref, 'refs/tags/release-')
     steps:
     - name: Get the version
       id: get_version
