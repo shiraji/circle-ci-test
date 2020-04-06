@@ -1,18 +1,12 @@
 name: CI-beta
 
-on:
-  push:
-    tags:
-      - 'beta-**'
+on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
-      
     - uses: actions/cache@v1
       with:
         path: ~/.gradle/caches
@@ -20,18 +14,29 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ~/.gradle/caches
-        key: v1-gradle-caches-${{ hashFiles('settings.gradle.kts') }}-${{ hashFiles('build.gradle.kts') }}-${{ hashFiles('gradle.properties') }} 
-    
+        key: v1-gradle-caches-${{ hashFiles('settings.gradle.kts') }}-${{ hashFiles('build.gradle.kts') }}-${{ hashFiles('gradle.properties') }}
     - name: DL all dependencies
       run: ./gradlew resolveDependencies
-    
-    - name: set up JDK 1.11
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.11
+    - name: Tests
+      run: ./gradlew test
+
+  beta-release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startswith(github.ref, 'tags/beta-')
+    steps:
+    - name: get the version
+      id: get_version
+      run: echo ::set-output name=version::${github_ref/refs\/tags\//}
+    - name: release
+      run: ./gradlew appversion -dversion=${version#beta-}
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'tags/release-')
+    steps:
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-    
     - name: Release
-      run: ./gradlew appVersion -DVERSION=${VERSION#beta-}
+      run: ./gradlew appVersion -DVERSION=${VERSION#release-}
